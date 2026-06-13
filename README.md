@@ -64,4 +64,4 @@ Backend: Render
 
 ## Known Issues
 
-The Categories are not showing on each card yet!
+No known issues yet!
