@@ -11,7 +11,6 @@ app.use(express.json());
 
 app.use("/tasks", require("./Routes/taskRoutes"));
 
-console.log("MONGO_URL =", process.env.MONGO_URL);
 mongoose
 .connect(process.env.MONGO_URL, {
    serverSelectionTimeoutMS: 10000,
