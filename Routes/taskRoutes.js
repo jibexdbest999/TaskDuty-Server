@@ -23,7 +23,7 @@ router.post("/", authMiddleware, async (req, res) => {
 
 router.put("/:id", authMiddleware, async (req, res) => {
   try {
-    const task = await Task.findByIdAndUpdate(
+    const task = await Task.findOneAndUpdate(
     {
       _id: req.params.id,
       user: req.user.userId,
@@ -40,7 +40,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
 
 router.delete("/:id", authMiddleware, async (req, res) => {
   try {
-    await Task.findByIdAndDelete({ _id: req.params.id, user: req.user.userId });
+    await Task.findOneAndDelete({ _id: req.params.id, user: req.user.userId });
 
     res.status(200).json({
       message: "Task deleted",
