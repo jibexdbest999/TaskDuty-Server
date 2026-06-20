@@ -93,4 +93,36 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser };
+const updateProfile = async (req, res) => {
+  try {
+    const { firstName, lastName } = req.body;
+
+    const user = await User.findByIdAndUpdate(
+      req.user.userId,
+      {
+        firstName,
+        lastName,
+      },
+      {
+        new: true,
+      }
+    );
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { signupUser, loginUser, updateProfile };
