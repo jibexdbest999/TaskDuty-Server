@@ -125,4 +125,46 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser, updateProfile };
+const changePassword = async (req, res) => {
+  try {
+    const {
+      currentPassword,
+      newPassword,
+    } = req.body;
+
+    const user = await User.findById(
+      req.user.userId
+    );
+
+    const isMatch = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+
+    if (!isMatch) {
+      return res.status(400).json({
+        message:
+          "Your current password is invalid",
+      });
+    }
+
+    const hashedPassword =
+      await bcrypt.hash(newPassword, 10);
+
+    user.password = hashedPassword;
+
+    await user.save();
+
+    res.status(200).json({
+      message:
+        "Password updated successfully",
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { signupUser, loginUser, updateProfile, changePassword };
