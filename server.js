@@ -14,7 +14,6 @@ app.use(express.json());
 app.use("/auth", require("./Routes/authRoutes"));
 app.use("/tasks", require("./Routes/taskRoutes"));
 
-console.log(process.env.MONGO_URI);
 mongoose
 .connect(process.env.MONGO_URL, {
    serverSelectionTimeoutMS: 10000,
